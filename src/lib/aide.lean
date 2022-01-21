@@ -1,13 +1,6 @@
 import tactic.linarith
 import lib.interactive_expr
 
-/-- Définitions à tenter de déplier quand on ne reconnait ni un ∀ ni un ∃. -/
-def unfold_defs : list name := [`borne_sup, `continue_en, `croissante, `decroissante, 
-  `est_borne_inf, `est_borne_sup, `extraction, `impair, `impaire, `injective, 
-  `limite_infinie_suite, `limite_infini_suite, `limite_moins_infini_suite,
-  `limite_suite, `majorant, `majoree, `minorant, `minoree, `pair, `paire, `pgcd,
-  `segment, `suite_cauchy, `suite_croissante, `suite_decroissante, `surjective,
-  `valeur_adherence]
 
 meta def rel_symb : expr → tactic (expr × expr × string)
 | `(%%x < %%y) := pure (x, y, " < ")
@@ -91,6 +84,14 @@ meta def tofmt : my_expr →  tactic format
 
 meta instance : has_to_tactic_format my_expr :=
 ⟨my_expr.tofmt⟩
+
+/-- Définitions à tenter de déplier quand on ne reconnait ni un ∀ ni un ∃. -/
+def unfold_defs : list name := [`borne_sup, `continue_en, `croissante, `decroissante, 
+  `est_borne_inf, `est_borne_sup, `extraction, `impair, `impaire, `injective, 
+  `limite_infinie_suite, `limite_infini_suite, `limite_moins_infini_suite,
+  `limite_suite, `majorant, `majoree, `minorant, `minoree, `pair, `paire, `pgcd,
+  `segment, `suite_cauchy, `suite_croissante, `suite_decroissante, `surjective,
+  `valeur_adherence]
 
 meta def parse : expr → tactic my_expr
 | e@(expr.pi n bi t b) := do

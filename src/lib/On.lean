@@ -4,7 +4,6 @@ import topology.instances.real
 import .tokens
 import .compute
 import .commun
-import .aide
 
 namespace tactic
 setup_tactic_parser
@@ -91,7 +90,7 @@ meta def On : parse On_parser → tactic unit
       `(%%P → %%Q) ← target | fail "On ne peut pas contraposer, le but n'est pas une implication",
       cp ← mk_mapp ``imp_of_not_imp_not [P, Q] <|> fail "On ne peut pas contraposer, le but n'est pas une implication",
       apply cp,
-      if push then try (do unfold_defs.mmap' (λ d, try (tactic.interactive.delta [d] (loc.ns [none]))), tactic.interactive.push_neg (loc.ns [none])) else skip
+      if push then try (tactic.interactive.push_neg (loc.ns [none])) else skip
 | (discussion pe) := focus1 (do e ← to_expr pe,
                                 `(%%P ∨ %%Q) ← infer_type e <|> fail "Cette expression n'est pas une disjonction.",
                                 tgt ← target, 
@@ -119,8 +118,7 @@ meta def On : parse On_parser → tactic unit
                           end
 | (oubli l) := clear_lst l
 | (reforml n pe) := do h ← get_local n, e ← to_expr pe, change_core e (some h)
-| (push_negation n new) := do unfold_defs.mmap' (λ d, try (tactic.interactive.delta [d] (loc.ns [n]))), 
-                              interactive.push_neg (loc.ns [n]),
+| (push_negation n new) := do interactive.push_neg (loc.ns [n]),
                               match (n, new) with
                               | (some hyp, some stuff) := do e ← get_local hyp,
                                                              enewhyp ← to_expr stuff,

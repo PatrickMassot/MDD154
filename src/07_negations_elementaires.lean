@@ -298,7 +298,8 @@ def paire (f : ℝ → ℝ) := ∀ x, f (-x) = f x
 -- Montrons que la fonction x ↦ 2x n'est pas paire.
 example : ¬ paire (λ x, 2*x) :=
 begin
-  On déplie paire, -- Cette ligne est facultative mais permet de bien voir ce qui se passe
+  On déplie paire, -- On notera que, pour une fois, cette ligne de dépliage
+                   -- est importante car « On pousse la négation» ne déplie pas les définitions.
   On pousse la négation,
   Montrons que 42 convient,
   Supposons hyp,
