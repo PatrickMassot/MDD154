@@ -3,6 +3,7 @@ image: leanprovercommunity/mathlib:gitpod
 vscode:
   extensions:
     - https://raw.githubusercontent.com/PatrickMassot/MDD154/master/mdd154-1.0.0.vsix
+    - usernamehw.errorlens
 
 tasks:
   - init: . /home/gitpod/.profile && leanpkg configure && leanproject get-mathlib-cache 
