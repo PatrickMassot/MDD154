@@ -8,6 +8,8 @@
             "**/.DS_yml": true,
             "**/_target": true,
             "**/leanpkg.*": true,
+            "**/.gitpod.yml": true,
+            "**/.vscode": true,
             "**/*.vsix": true,
             "**/*.olean": true
         },
