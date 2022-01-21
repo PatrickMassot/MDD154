@@ -1,0 +1,19 @@
+{
+        "files.exclude": {
+            "**/.git": true,
+            "**/.svn": true,
+            "**/.hg": true,
+            "**/CVS": true,
+            "**/.DS_Store": true,
+            "**/.DS_yml": true,
+            "**/_target": true,
+            "**/leanpkg.*": true,
+            "**/*.vsix": true,
+            "**/*.olean": true
+        },
+        "lean.input.leader": ",",
+        "editor.fontFamily": "'DejaVu sans mono'",
+        "editor.minimap.enabled": false,
+        "window.titleBarStyle": "custom",
+    }
+    

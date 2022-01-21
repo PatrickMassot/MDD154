@@ -1,0 +1,38 @@
+{
+   "On réécrit via": {
+	   "prefix": "OR",
+	   "body": [
+		   "On réécrit via $1,",
+	   ]
+   },
+   "On conclut": {
+	   "prefix": "OC",
+	   "body": [
+		   "On conclut par $1,",
+	   ]
+   },
+   "On applique": {
+	   "prefix": "OA",
+	   "body": [
+		   "On applique $1,",
+	   ]
+   },
+   "Montrons que": {
+	   "prefix": "MQ",
+	   "body": [
+		   "Montrons que $1,",
+	   ]
+   },
+   "appliqué à": {
+	   "prefix": "AA",
+	   "body": [
+		   "appliqué à $1",
+	   ]
+   },
+   "on obtient": {
+	   "prefix": "OO",
+	   "body": [
+		   "on obtient $1 tel que $2,",
+	   ]
+   },
+}

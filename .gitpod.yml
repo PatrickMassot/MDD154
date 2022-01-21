@@ -5,4 +5,4 @@ vscode:
     - https://raw.githubusercontent.com/PatrickMassot/MDD154/master/mdd154-1.0.0.vsix
 
 tasks:
-  - command: . /home/gitpod/.profile && leanpkg configure && leanproject get-mathlib-cache && lean --make src/lib/*.lean 
+  - command: . /home/gitpod/.profile && leanpkg configure && leanproject get-mathlib-cache 
