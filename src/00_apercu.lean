@@ -25,7 +25,7 @@ affiche les objets et hypothèses intervenant à ce stade de la démonstration,
 ainsi que le ou les buts de la démonstration.
 -/
 
--- Définition de « limite de f en x₀ = y₀ »
+-- Définition de « f est continue en x₀ »
 -- Lean n'a pas besoin de parenthèse dans f(x)
 def continue_en (f : ℝ → ℝ) (x₀ : ℝ) : Prop :=
 ∀ ε > 0, ∃ δ > 0, ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε
@@ -35,19 +35,22 @@ def continue_en (f : ℝ → ℝ) (x₀ : ℝ) : Prop :=
 def limite_suite (u : ℕ → ℝ) (l : ℝ) : Prop :=
 ∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| ≤ ε
 
--- Si f est continue en x₀ et la suite u tend vers x₀ alors la suite f ∘ u,
+-- Soit f une fonction, u une suite de réels et x₀ un réel.
+-- Si f est continue en x₀ et si la suite u tend vers x₀ alors la suite f ∘ u,
 -- qui envoie n sur f (u n), tend vers f x₀
-example (f u x₀) (hu : limite_suite u x₀) (hf : continue_en f x₀) :
+example (f : ℝ → ℝ) (u : ℕ → ℝ) (x₀ : ℝ) 
+  (hf : continue_en f x₀) (hu : limite_suite u x₀) :
   limite_suite (f ∘ u) (f x₀) :=
 begin
   Montrons que ∀ ε > 0, ∃ N, ∀ n ≥ N, |(f ∘ u) n - f x₀| ≤ ε,
   Soit ε > 0,
-  Par hf appliqué à [ε, ε_pos] on obtient (δ : ℝ) tel que 
+  Par hf appliqué à [ε, ε_pos] on obtient δ : ℝ tel que 
     (δ_pos : δ > 0) (hδf : ∀ x, |x - x₀| ≤ δ → |f x - f x₀| ≤ ε),
-  Par hu appliqué à [δ, δ_pos] on obtient (N : ℕ) tel que
+  Par hu appliqué à [δ, δ_pos] on obtient N : ℕ tel que
     (hNu : ∀ n ≥ N, |u n - x₀| ≤ δ),
   Montrons que N convient : ∀ n ≥ N, |(f ∘ u) n - f x₀| ≤ ε,
   Soit n ≥ N,
+  Montrons que |(f ∘ u) n - f x₀| ≤ ε,
   Par hδf il suffit de montrer que |u n - x₀| ≤ δ,
   On conclut par hNu appliqué à [n, n_ge],
 end

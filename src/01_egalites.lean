@@ -59,6 +59,11 @@ begin
   sorry
 end
 
+/-
+N'oubliez pas que pour remplacer de la droite vers la gauche, on utilise
+`On réécrit via ← ...`.
+-/
+
 example (a b c : ℝ) : a * (b * c) = b * (a * c) :=
 begin
   sorry
@@ -67,7 +72,8 @@ end
 /-
 Reprendre l'exemple précédent en expérimentant ce qui se passe si on ne fournit
 pas les arguments aux énoncés `mul_assoc` ou `mul_comm`.
-Par exemple on pourra commencer par `On réécrit via ← mul_assoc,`
+Par exemple on pourra commencer par `On réécrit via ← mul_assoc,` puis tenter
+`On réécrit via mul_comm`.
 -/
 
 example (a b c : ℝ) : a * (b * c) = b * (a * c) :=
@@ -82,6 +88,9 @@ dans l'hypothèse `hyp`.
 
 Dans l'exemple suivant on utilise le fait
 `two_mul a : 2 * a = a + a`
+et la commande `On conclut par` qui permet de conclure en faisant directement
+référence à une hypothèse (nous verrons plus loin que cette commande permet
+de faire un peu plus que cela).
 -/
 
 example (a b c d : ℝ) (hyp : c = d * a + b) (hyp' : b = a * d) : c = 2 * a * d :=
@@ -110,6 +119,8 @@ papier. Voici comment présenter les choses autrement.
 la formule précédente. Il s'agit d'un point important, prenez le temps de bien
 mettre le curseur après chaque accolade ouvrante pour voir quel est le but de chacune
 de ces justifications.
+
+Notez aussi l'absence de virgule à la fin des lignes intermédiaires.
 -/
 
 example (a b c d : ℝ) (hyp : c = d * a + b) (hyp' : b = a * d) : c = 2 * a * d :=
@@ -146,6 +157,9 @@ begin
   ... = 2 * a * d   : by { On calcule },
 end
 
+/- Vous pouvez aussi utiliser le commande `On calcule` en dehors de la commande
+`calc`. -/
+
 example (a b c : ℝ) : a * (b * c) = b * (a * c) :=
 begin
   sorry
@@ -160,8 +174,8 @@ sub_add a b c : a - b + c = a - (b - c)
 -/
 
 /-
-Si vous êtes en avance et pas encore convaincus par "On calcule",
-démontrer le lemme suivant sans "On calcule", mais avec une partie des lemmes 
+Si vous êtes en avance et pas encore convaincus par `On calcule`,
+démontrer le lemme suivant sans `On calcule`, mais avec une partie des lemmes 
 suivants (en plus des lemmes déjà mentionés plus haut) :
 `pow_two x       : x^2 = x*x`
 `mul_add a b c   : a*(b + c) = a*b + a*c`
