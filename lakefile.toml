@@ -1,0 +1,27 @@
+name = "mdd154"
+defaultTargets = ["Mdd154"]
+
+[leanOptions]
+pp.unicode.fun = true
+pp.proofs.withType = false
+linter.all = false
+weak.linter.unusedTactic = false
+weak.linter.hashCommand = false
+weak.linter.oldObtain = false
+weak.linter.refine = false
+weak.linter.style.cdot = false
+weak.linter.style.dollarSyntax = false
+weak.linter.style.header = false
+weak.linter.style.lambdaSyntax = false
+weak.linter.style.longLine = false
+weak.linter.style.missingEnd = false
+weak.linter.style.setOption = false
+weak.linter.style.multiGoal = false
+
+[[require]]
+name = "verbose"
+git = "https://github.com/PatrickMassot/verbose-lean4.git"
+
+[[lean_lib]]
+name = "Mdd154"
+globs = ["Mdd154.*"]
