@@ -31,6 +31,11 @@ def limite_suite (u : ℕ → ℝ) (l : ℝ) : Prop :=
 
 notation3:50 u:80 " tend vers " l => limite_suite u l
 
+/-- La suite `u` tend vers `+∞`. -/
+def limite_infinie_suite (u : ℕ → ℝ) := ∀ A, ∃ N, ∀ n ≥ N, u n ≥ A
+
+notation3:50 u:80 " tend vers +∞"  => limite_infinie_suite u
+
 def est_borne_sup (M : ℝ) (u : ℕ → ℝ) :=
 (∀ n, u n ≤ M) ∧ ∀ ε > 0, ∃ n₀, u n₀ ≥ M - ε
 
@@ -311,23 +316,23 @@ private lemma abs_le_of_le_and_le {α : Type*} [LinearOrderedAddCommGroup α] {a
 private lemma abs_le_of_le_and_le' {α : Type*} [LinearOrderedAddCommGroup α] {a b : α}
     (h : a ≤ b ∧ -b ≤ a) : |a| ≤ b := abs_le.2 ⟨h.2, h.1⟩
 
-configureAnonymousFactSplittingLemmas le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm' non_zero_abs_pos carre_pos m154.pos_pos m154.neg_neg extraction_superieur_id unicite_limite le_max_left le_max_right Iff.symm le_of_max_le_left le_of_max_le_right ex_mul_of_dvd ex_mul_of_dvd' abs_diff ineg_triangle abs_plus le_trans lt_of_le_of_lt lt_of_lt_of_le lt_trans
+configureAnonymousFactSplittingLemmas le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm' non_zero_abs_pos carre_pos m154.pos_pos m154.neg_neg extraction_superieur_id unicite_limite le_max_left le_max_right Iff.symm le_of_max_le_left le_of_max_le_right ex_mul_of_dvd ex_mul_of_dvd' abs_diff ineg_triangle abs_plus le_trans lt_of_le_of_lt lt_of_lt_of_le lt_trans abs_of_nonneg abs_of_neg abs_of_nonpos
 
 configureAnonymousGoalSplittingLemmas LogicIntros AbsIntros Set.Subset.antisymm le_antisymm le_antisymm' lt_irrefl abs_le_of_le_and_le abs_le_of_le_and_le' egal_si_abs_eps
 
 configureAnonymousCaseSplittingLemmas le_or_gt lt_or_gt_of_ne lt_or_eq_of_le eq_or_lt_of_le eq_zero_or_eq_zero_of_mul_eq_zero Classical.em pair_ou_impair le_total
 
-configureAnonymousComputeLemmas abs_diff ineg_triangle abs_plus
+configureAnonymousComputeLemmas abs_diff ineg_triangle abs_plus inferieur_max_gauche inferieur_max_droite
 
 useDefaultDataProviders
 
 useDefaultSuggestionProviders
 
 configureUnfoldableDefs «croissante» «decroissante» «paire» «impaire»
-  «valeur_adherence» «limite_suite» «surjective» «injective» «pair» «impair» «extraction» suite_cauchy
+  «valeur_adherence» «limite_suite» «surjective» «injective» «pair» «impair» «extraction» suite_cauchy limite_infinie_suite
 
 -- Remarque : en arrivant aux feuilles de négations on pourra ajouter helpByContradictionGoal
-configureHelpProviders DefaultHypHelp DefaultGoalHelp
+configureHelpProviders SinceHypHelp SinceGoalHelp
 
 disableWidget
 
@@ -360,3 +365,4 @@ end
 
 notation3bis "Prédicat sur " X => X → Prop
 notation3bis "Énoncé" => Prop
+notation3 "Faux" => False
