@@ -37,8 +37,6 @@ lemma lim_le {x y : ℝ} {u : ℕ → ℝ} (hu : limite_suite u x)
 
 addAnonymousFactSplittingLemma lim_le
 
-def limite_infinie_suite (u : ℕ → ℝ) := ∀ A, ∃ N, ∀ n ≥ N, u n ≥ A
-
 lemma limite_infinie_pas_finie {u : ℕ → ℝ} :
   limite_infinie_suite u → ∀ x, ¬ limite_suite u x := by
   intros lim_infinie x lim_x

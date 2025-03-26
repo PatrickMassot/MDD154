@@ -41,6 +41,11 @@ def est_borne_sup (M : ℝ) (u : ℕ → ℝ) :=
 
 notation3:50 M:80 " est borne sup de " u => est_borne_sup M u
 
+def est_borne_inf (M : ℝ) (u : ℕ → ℝ) :=
+(∀ n, M ≤ u n) ∧ ∀ ε > 0, ∃ n₀, u n₀ ≤ M + ε
+
+notation3:50 M:80 " est borne inf de " u => est_borne_inf M u
+
 namespace m154
 
 lemma inferieur_ssi {x y : ℝ} : x ≤ y ↔ 0 ≤ y - x :=
@@ -94,10 +99,10 @@ lemma divise_def (a b : ℤ) : a ∣ b ↔ ∃ k, b = a*k :=
 Iff.rfl
 
 def pair (n : ℤ) := ∃ k, n = 2*k
-notation:50 n:70 " est pair" => pair n
+notation:50 n:60 " est pair" => pair n
 
 def impair (n : ℤ) := ∃ k, n = 2*k + 1
-notation:50 n:70 " est impair" => impair n
+notation:50 n:60 " est impair" => impair n
 
 lemma pair_ou_impair (n : ℤ) : n est pair ∨ n est impair := by
   convert Int.even_or_odd n
@@ -252,8 +257,11 @@ lemma extraction_superieur_id : φ est une extraction → ∀ n, n ≤ φ n := b
   | zero => exact Nat.zero_le _
   | succ n hn => exact Nat.succ_le_of_lt (by linarith [hyp n (n+1) (by linarith)])
 
-
-
+lemma extraction_croissante (h : φ est une extraction) : φ est croissante := by
+  intro n m hnm
+  rcases Nat.eq_or_lt_of_le hnm with rfl | hnm'
+  rfl
+  exact (h n m hnm').le
 
 lemma extraction_machine (ψ : ℕ → ℕ) (hψ : ∀ n, ψ n ≥ n) :
     ∃ f : ℕ → ℕ, ψ ∘ f est une extraction ∧ ∀ n, f n ≥ n := by
@@ -261,7 +269,7 @@ lemma extraction_machine (ψ : ℕ → ℕ) (hψ : ∀ n, ψ n ≥ n) :
   refine ⟨θ, fun m n h ↦ ?_, fun n ↦ ?_⟩
   { induction h with
     | refl => exact hψ _
-    | @step p Ih Ih' => simp at *; specialize hψ (θ <| p + 1); linarith }
+    | @step p Ih Ih' => simp at *; specialize hψ (θ <| p + 1); change ψ _ + 1 ≤ _ at hψ; linarith }
   { induction n with
     | zero => apply le_refl
     | succ n ih =>  exact Nat.succ_le_succ (le_trans ih (hψ _)) }
@@ -316,7 +324,7 @@ private lemma abs_le_of_le_and_le {α : Type*} [LinearOrderedAddCommGroup α] {a
 private lemma abs_le_of_le_and_le' {α : Type*} [LinearOrderedAddCommGroup α] {a b : α}
     (h : a ≤ b ∧ -b ≤ a) : |a| ≤ b := abs_le.2 ⟨h.2, h.1⟩
 
-configureAnonymousFactSplittingLemmas le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm' non_zero_abs_pos carre_pos m154.pos_pos m154.neg_neg extraction_superieur_id unicite_limite le_max_left le_max_right Iff.symm le_of_max_le_left le_of_max_le_right ex_mul_of_dvd ex_mul_of_dvd' abs_diff ineg_triangle abs_plus le_trans lt_of_le_of_lt lt_of_lt_of_le lt_trans abs_of_nonneg abs_of_neg abs_of_nonpos
+configureAnonymousFactSplittingLemmas le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm' non_zero_abs_pos carre_pos m154.pos_pos m154.neg_neg extraction_superieur_id unicite_limite le_max_left le_max_right Iff.symm le_of_max_le_left le_of_max_le_right ex_mul_of_dvd ex_mul_of_dvd' abs_diff ineg_triangle abs_plus le_trans lt_of_le_of_lt lt_of_lt_of_le lt_trans abs_of_nonneg abs_of_neg abs_of_nonpos extraction_croissante
 
 configureAnonymousGoalSplittingLemmas LogicIntros AbsIntros Set.Subset.antisymm le_antisymm le_antisymm' lt_irrefl abs_le_of_le_and_le abs_le_of_le_and_le' egal_si_abs_eps
 
@@ -341,7 +349,9 @@ macro_rules | `($x / $y)   => `(HDiv.hDiv ($x : ℝ) ($y : ℝ))
 macro_rules | `($x ∣ $y)   => `(@Dvd.dvd ℤ Int.instDvd ($x : ℤ) ($y : ℤ))
 
 macro "setup_env" : command => `(set_option linter.unusedTactic false
-set_option linter.style.multiGoal false)
+set_option linter.style.multiGoal false
+set_option linter.unnecessarySimpa false
+)
 
 macro "fct " x:ident " ↦ " y:term : term => `(fun ($x : ℝ) ↦ ($y : ℝ))
 macro "suite " i:ident " ↦ " y:term : term => `(fun ($i : ℕ) ↦ ($y : ℝ))
