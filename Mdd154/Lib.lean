@@ -29,7 +29,7 @@ notation:50 f:80 " est décroissante" => decroissante f
 def limite_suite (u : ℕ → ℝ) (l : ℝ) : Prop :=
 ∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| ≤ ε
 
-notation3:50 u:80 " tend vers " l => limite_suite u l
+notation3:50 u:80 " tend vers " l:60 => limite_suite u l
 
 /-- La suite `u` tend vers `+∞`. -/
 def limite_infinie_suite (u : ℕ → ℝ) := ∀ A, ∃ N, ∀ n ≥ N, u n ≥ A
@@ -39,12 +39,32 @@ notation3:50 u:80 " tend vers +∞"  => limite_infinie_suite u
 def est_borne_sup (M : ℝ) (u : ℕ → ℝ) :=
 (∀ n, u n ≤ M) ∧ ∀ ε > 0, ∃ n₀, u n₀ ≥ M - ε
 
-notation3:50 M:80 " est borne sup de " u => est_borne_sup M u
+notation3:50 M:80 " est borne sup de " u:50 => est_borne_sup M u
 
 def est_borne_inf (M : ℝ) (u : ℕ → ℝ) :=
 (∀ n, M ≤ u n) ∧ ∀ ε > 0, ∃ n₀, u n₀ ≤ M + ε
 
+/-- Le réel `x` est un majorant de l'ensemble de réels `A`. -/
+def majorant (A : Set ℝ) (x : ℝ) := ∀ a ∈ A, a ≤ x
+
+notation3:50 x:80 " majore " A:50 => majorant A x
+
+/-- Le réel `x` est une  borne supérieure de l'ensemble de réels `A`. -/
+def borne_sup (A : Set ℝ) (x : ℝ) := x majore A ∧ ∀ y, y majore A → x ≤ y
+
+notation3:50 x:80 " est borne sup de " A:50 => borne_sup A x
+
 notation3:50 M:80 " est borne inf de " u => est_borne_inf M u
+
+/-- Le réel `x` est un minorant de l'ensemble de réels `A`. -/
+def minorant (A : Set ℝ) (x : ℝ) := ∀ a ∈ A, x ≤ a
+
+notation3:50 x:80 " minore " A:50 => minorant A x
+
+/-- Le réel `x` est une  borne inférieure de l'ensemble de réels `A`. -/
+def borne_inf (A : Set ℝ) (x : ℝ) := x minore A ∧ ∀ y, y minore A → x ≤ y
+
+notation3:50 x:80 " est borne inf de " A:50 => borne_inf A x
 
 namespace m154
 
@@ -274,8 +294,19 @@ lemma extraction_machine (ψ : ℕ → ℕ) (hψ : ∀ n, ψ n ≥ n) :
     | zero => apply le_refl
     | succ n ih =>  exact Nat.succ_le_succ (le_trans ih (hψ _)) }
 
+open Lean Elab Tactic in
+elab "check_defs" : tactic => withMainContext do
+  let tgt ← getMainTarget
+  unless tgt.isAppOf `Iff do
+    throwError "Le but doit être une équivalence"
+  let rhs := tgt.getAppArgs[1]!
+  if rhs.containsConst (· == `limite_suite) then
+    throwError "Le membre de droite ne doit pas contenir « tends vers »"
+  if rhs.containsConst (· == `Not) then
+    throwError "Le membre de droite ne doit pas contenir de négation"
+
 macro "verifie" : tactic =>
-`(tactic|
+`(tactic|check_defs <;>
     first |(
         try unfold limite_suite;
         try unfold continue_en;
@@ -324,7 +355,9 @@ private lemma abs_le_of_le_and_le {α : Type*} [LinearOrderedAddCommGroup α] {a
 private lemma abs_le_of_le_and_le' {α : Type*} [LinearOrderedAddCommGroup α] {a b : α}
     (h : a ≤ b ∧ -b ≤ a) : |a| ≤ b := abs_le.2 ⟨h.2, h.1⟩
 
-configureAnonymousFactSplittingLemmas le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm' non_zero_abs_pos carre_pos m154.pos_pos m154.neg_neg extraction_superieur_id unicite_limite le_max_left le_max_right Iff.symm le_of_max_le_left le_of_max_le_right ex_mul_of_dvd ex_mul_of_dvd' abs_diff ineg_triangle abs_plus le_trans lt_of_le_of_lt lt_of_lt_of_le lt_trans abs_of_nonneg abs_of_neg abs_of_nonpos extraction_croissante
+private lemma not_le_lt (x y: ℝ) (h : x ≤ y) (h' : y < x) : False := lt_irrefl x (h.trans_lt h')
+
+configureAnonymousFactSplittingLemmas le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm' non_zero_abs_pos carre_pos m154.pos_pos m154.neg_neg extraction_superieur_id unicite_limite le_max_left le_max_right Iff.symm le_of_max_le_left le_of_max_le_right ex_mul_of_dvd ex_mul_of_dvd' abs_diff ineg_triangle abs_plus le_trans lt_of_le_of_lt lt_of_lt_of_le lt_trans abs_of_nonneg abs_of_neg abs_of_nonpos extraction_croissante not_le_lt
 
 configureAnonymousGoalSplittingLemmas LogicIntros AbsIntros Set.Subset.antisymm le_antisymm le_antisymm' lt_irrefl abs_le_of_le_and_le abs_le_of_le_and_le' egal_si_abs_eps
 
@@ -373,6 +406,6 @@ def delabFct : Delab := delabLamWithTypes (mkConst ``Real) (mkConst ``Real) fun 
 def delabSuite : Delab := delabLamWithTypes (mkConst ``Nat) (mkConst ``Real) fun x y => `(suite $x ↦ $y)
 end
 
-notation3bis "Prédicat sur " X => X → Prop
-notation3bis "Énoncé" => Prop
+notation3 "Prédicat sur " X => X → Prop
+notation3 "Énoncé" => Prop
 notation3 "Faux" => False

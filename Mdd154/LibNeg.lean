@@ -91,6 +91,11 @@ lemma abs_of_nonneg' (x : ℝ) (h : x ≥ 0) : |x| = x := abs_of_nonneg h
 lemma non_le_lt (a b : ℝ) (h : a ≤ b) (h' : b < a) : False := lt_irrefl a (lt_of_le_of_lt h h')
 lemma non_lt_le (a b : ℝ) (h : a < b) (h' : b ≤ a) : False := lt_irrefl a (lt_of_lt_of_le h h')
 
+lemma pair_si_eq_double (a b : ℤ) (h : a = 2*b) : a est pair := ⟨b, h⟩
+lemma double_pair (a : ℤ) : 2*a est pair := ⟨a, rfl⟩
+lemma impair_si_eq_succ_double (a b : ℤ) (h : a = 2*b + 1) : a est impair := ⟨b, h⟩
+lemma succ_double_impair (a : ℤ) : 2*a + 1 est impair := ⟨a, rfl⟩
+
 configureAnonymousFactSplittingLemmas
 le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le
 eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm'
@@ -112,6 +117,8 @@ pair_succ_impair impair_succ_pair
 Or.resolve_left Or.resolve_right
 v₂_square v₂_two_mul pow_ne_zero
 non_le_lt non_lt_le
+False.elim
+pair_si_eq_double double_pair impair_si_eq_succ_double succ_double_impair
 
 configureHelpProviders SinceHypHelp SinceGoalHelp helpByContradictionGoal helpShowContrapositiveGoal
 
