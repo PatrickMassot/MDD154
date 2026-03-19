@@ -29,7 +29,7 @@ QED
 
 /-
 Dans l'exemple suivant, on utilise une hypothèse de la forme `∃ x : X, P x`
-au moyen de la commande `Comme _ on obtient _ tel que`.
+au moyen de la commande `Comme … on obtient … tel que …`.
 
 On notera deux choses dans le calcul.
 
@@ -47,7 +47,7 @@ Exemple "Utilisation d’une existence, suivie d’un calcul."
   Hypothèses : (h : ∃ n', n = n' + 1)
   Conclusion : n > 0
 Démonstration :
-  Comme ∃ n', n = n' + 1 on obtient n' tel que hn' : n = n' + 1
+  Comme ∃ n', n = n' + 1 on obtient n' tel que n = n' + 1
   Calc
     n = n' + 1 par hypothèse
     _ > 0      par calcul
@@ -63,7 +63,7 @@ Exemple "Utilisation d’une existence, suivie d’une substitution"
   Hypothèses : (h : ∃ n', n = n' + 1)
   Conclusion : n > 0
 Démonstration :
-  Comme ∃ n', n = n' + 1 on obtient n' tel que hn' : n = n' + 1
+  Comme ∃ n', n = n' + 1 on obtient n' tel que n = n' + 1
   Comme n = n' + 1 il suffit de montrer que n' + 1 > 0
   On calcule
 QED
@@ -94,12 +94,12 @@ Exemple "Tout carré est positif."
   Hypothèses : (h : ∃ x, y = x*x)
   Conclusion : y ≥ 0
 Démonstration :
-  Comme ∃ x, y = x*x on obtient x₀ tel que hy₀ : y = x₀*x₀
+  Comme ∃ x, y = x*x on obtient x₀ tel que y = x₀*x₀
   Comme y = x₀*x₀ il suffit de montrer que x₀*x₀ ≥ 0
   On discute selon que 0 ≤ x₀ ou x₀ < 0
-  Supposons h' : 0 ≤ x₀
+  Supposons que 0 ≤ x₀
   Comme 0 ≤ x₀ on conclut que x₀*x₀ ≥ 0
-  Supposons h' : x₀ < 0
+  Supposons que x₀ < 0
   Comme x₀ ≤ 0 on conclut que x₀*x₀ ≥ 0
 QED
 
@@ -117,18 +117,28 @@ Exemple "La divisibilité est transitive."
   Hypothèses : (h1 : a ∣ b) (h2 : b ∣ c)
   Conclusion : a ∣ c
 Démonstration :
-  Comme a ∣ b on obtient k tel que hk : b = a*k -- (1)
-  Comme b ∣ c on obtient l tel que hl : c = b*l -- (2)
+  Comme a ∣ b on obtient k tel que b = a*k
+  Comme b ∣ c on obtient l tel que c = b*l
   -- Pour montrer que a ∣ c, il suffit de trouver m tel que c = a*m
-  Montrons que ∃ m, c = a * m
-  Montrons que k*l convient : c = a * (k * l)
+  Montrons que ∃ m, c = a*m
+  Montrons que k*l convient : c = a*(k*l)
   Calc
-    c = b*l     puisque c = b*l
+    c = b*l     par hypothèse
     _ = (a*k)*l puisque b = a*k
     _ = a*(k*l) par calcul
 QED
 
 /-
+Dans l’exemple ci-dessus, on notera que la deuxième ligne de calcul ne
+peut pas être justifiée en écrivant `par hypothèse` car aucune hypothèse
+n’affirme que `b*l = (a*k)*l`.
+
+On notera également que la dernière justification correspond à un niveau
+de précision un peu supérieur à ce qu’on utilise sur papier, en prenant
+soin d’utiliser l’associativité de la multiplication. Lorsque Lean lit
+ou affiche `a*b*c`, cela signifie `(a*b)*c`. Ensuite la justification
+`par calcul` suffit à passer à `a*(b*c)`.
+
 Voyons maintenant un autre énoncé semblable.
 -/
 
@@ -148,7 +158,9 @@ On rappelle que `f est surjective` signifie `∀ y, ∃ x, f x = y`
 -/
 
 /-
-L'exemple suivant illustre l'utilisation de la commande `On renomme`.
+L'exemple suivant illustre l'utilisation des commandes `On reformule`
+et `On renomme` qui ne sont jamais indispensables mais aident parfois
+à clarifier la situation.
 -/
 
 Exemple "On suppose que g ∘ f est surjective. Alors g est surjective."
@@ -177,7 +189,7 @@ Démonstration :
   On renomme x en w dans l'hypothèse hyp
   -- On peut spécialiser l'hypothèse h au y que nous avons fixé
   -- ce qui fournit w tel que (g ∘ f)(w) = y
-  Comme ∀ z, ∃ w, (g ∘ f) w = z on obtient w : ℝ tel que hw : g (f w) = y
+  Comme ∀ z, ∃ w, (g ∘ f) w = z on obtient w : ℝ tel que (g ∘ f) w = y
   -- Montrons que f(w) convient pour notre but
   Montrons que f w convient
   -- Il s'agit de montrer que g(f(w)) = y mais ce n'est rien d'autre
@@ -199,7 +211,7 @@ Exemple "On suppose que g ∘ f est surjective. Alors g est surjective."
 Démonstration :
   Soit y
   Montrons que ∃ x, g x = y -- Cette ligne est optionnelle mais facilite la lecture
-  Comme (g ∘ f) est surjective on obtient w : ℝ tel que hw : (g ∘ f) w = y
+  Comme (g ∘ f) est surjective on obtient w : ℝ tel que (g ∘ f) w = y
   Montrons que f w convient
   On conclut par hypothèse
 QED
@@ -209,7 +221,7 @@ Et on peut passer à la rédaction « sur papier », par exemple :
 
   Soit y réel. Montrons qu'il existe x réel tel que g(x) = y.
   Par l'hypothèse de surjectivité de g ∘ f appliquée à y, on obtient w réel tel que
-  g ∘ f(w) = y. Le réel f(w) convient.
+  (g ∘ f)(w) = y. Le réel f(w) convient.
 -/
 
 Exercice "03.4"
@@ -217,10 +229,6 @@ Exercice "03.4"
   Hypothèses : (hf : f est surjective) (hg : g est surjective)
   Conclusion : (g ∘ f) est surjective
 Démonstration :
-  Soit y
-  Comme g est surjective on obtient w tel que hw : g w = y
-  Comme f est surjective on obtient z tel que hz : f z = w
-  Montrons que z convient
   sorry
 QED
 

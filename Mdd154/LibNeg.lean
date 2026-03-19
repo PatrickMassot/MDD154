@@ -3,17 +3,17 @@ import Mdd154.Lib
 
 open Verbose French m154
 
-private lemma abs_le_of_le_and_le {α : Type*} [LinearOrderedAddCommGroup α] {a b : α}
+private lemma abs_le_of_le_and_le {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α}
     (h : -b ≤ a ∧ a ≤ b) : |a| ≤ b := abs_le.2 h
 
-private lemma abs_le_of_le_and_le' {α : Type*} [LinearOrderedAddCommGroup α] {a b : α}
+private lemma abs_le_of_le_and_le' {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α}
     (h : a ≤ b ∧ -b ≤ a) : |a| ≤ b := abs_le.2 ⟨h.2, h.1⟩
 
-lemma mul_le_mul_of_pos_left {α : Type*} {a b c : α}  [OrderedSemiring α]
+lemma mul_le_mul_of_pos_left {α : Type*} {a b c : α} [Semiring α] [PartialOrder α] [IsOrderedRing α]
     (h : 0 < a) (h' : b ≤ c) : a * b ≤ a * c :=
   mul_le_mul_of_nonneg_left h' h.le
 
-lemma mul_le_mul_of_pos_right {α : Type*} {a b c : α} [OrderedSemiring α]
+lemma mul_le_mul_of_pos_right {α : Type*} {a b c : α} [Semiring α] [PartialOrder α] [IsOrderedRing α]
     (h : 0 < a) (h' : b ≤ c) : b*a ≤ c*a :=
   mul_le_mul_of_nonneg_right h' h.le
 
@@ -119,6 +119,24 @@ v₂_square v₂_two_mul pow_ne_zero
 non_le_lt non_lt_le
 False.elim
 pair_si_eq_double double_pair impair_si_eq_succ_double succ_double_impair
+le_le_of_le_min le_of_le_min_left le_of_le_min_right
+abs_pos_of_ne abs_pos_of_ne'
+
+addAnonymousFactSplittingLemma lt_min
+addAnonymousComputeLemma lt_min
+addAnonymousFactSplittingLemma min_le_left
+addAnonymousFactSplittingLemma min_le_right
+addAnonymousComputeLemma min_le_left
+addAnonymousComputeLemma min_le_right
+
+
+axiom arch {a b c : ℝ} (hc : c > 0) : ∃ N : Nat, a + N*c ≥ b
+
+addAnonymousFactSplittingLemma arch
+
+axiom eq_of_per {f : ℝ → ℝ} {T} (hf : f est T-périodique) (N : ℕ) (x) : f (x + N*T) = f x
+
+addAnonymousFactSplittingLemma eq_of_per
 
 configureHelpProviders SinceHypHelp SinceGoalHelp helpByContradictionGoal helpShowContrapositiveGoal
 

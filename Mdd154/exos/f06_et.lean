@@ -28,7 +28,7 @@ Démonstration :
   Montrons d'abord que a^2 > 0
   Comme a > 0 on conclut que a^2 > 0
   Montrons maintenant que |a| > 0
-  Comme a > 0 on obtient H : a ≠ 0
+  Comme a > 0 on obtient que a ≠ 0
   Comme a ≠ 0 on conclut que |a| > 0
 QED
 
@@ -70,8 +70,7 @@ QED
 Pour utiliser qu’une conjonction `P ∧ Q` est vraie on utilise que les énoncés `P` et `Q`
 sont tous les deux vrais.
 
-Pour cela on utilise la commande `Comme P ∧ Q on obtient hP : P et hQ : Q` où `hP`
-et `hQ` sont des noms au choix, parmi les noms disponibles.
+Pour cela on utilise la commande `Comme P ∧ Q on obtient que P et Q`.
 -/
 
 Exemple "Utilisation d’une conjonction"
@@ -79,12 +78,12 @@ Exemple "Utilisation d’une conjonction"
   Hypothèses : (h : 0 ≤ a ∧ a ≤ 1)
   Conclusion : a ≤ 2
 Démonstration :
-  Comme 0 ≤ a ∧ a ≤ 1 on obtient ha : 0 ≤ a et ha' : a ≤ 1
+  Comme 0 ≤ a ∧ a ≤ 1 on obtient que 0 ≤ a et a ≤ 1
   Comme a ≤ 1 on conclut que a ≤ 2
 QED
 
 /-
-Dans l’exemple ci-dessus, l’hypothèse `ha` n’est jamais utilisée, on peut
+Dans l’exemple ci-dessus, l’hypothèse `0 ≤ a` n’est jamais utilisée, on peut
 omettre d’en parler.
 -/
 Exemple "Utilisation d’une partie d’une conjonction"
@@ -92,7 +91,7 @@ Exemple "Utilisation d’une partie d’une conjonction"
   Hypothèses : (h : 0 ≤ a ∧ a ≤ 1)
   Conclusion : a ≤ 2
 Démonstration :
-  Comme 0 ≤ a ∧ a ≤ 1 on obtient ha' : a ≤ 1
+  Comme 0 ≤ a ∧ a ≤ 1 on obtient que a ≤ 1
   Comme a ≤ 1 on conclut que a ≤ 2
 QED
 
@@ -132,7 +131,7 @@ Exemple "Utilisation d’un énoncé impliquant une conjonction"
   Hypothèses : (ha : |a| ≤ 1)
   Conclusion : a ≤ 2
 Démonstration :
-  Comme |a| ≤ 1 et |a| ≤ 1 ⇒ -1 ≤ a ∧ a ≤ 1 on obtient ha' : -1 ≤ a et ha'' : a ≤ 1
+  Comme |a| ≤ 1 et |a| ≤ 1 ⇒ -1 ≤ a ∧ a ≤ 1 on obtient que -1 ≤ a et a ≤ 1
   Comme a ≤ 1 on conclut que a ≤ 2
 QED
 
@@ -146,7 +145,7 @@ Exemple "Utilisation d’un énoncé impliquant une conjonction,
   Hypothèses : (ha : |a| ≤ 1)
   Conclusion : a ≤ 2
 Démonstration :
-  Comme |a| ≤ 1 on obtient ha' : -1 ≤ a et ha'' : a ≤ 1
+  Comme |a| ≤ 1 on obtient que -1 ≤ a et a ≤ 1
   Comme a ≤ 1 on conclut que a ≤ 2
 QED
 

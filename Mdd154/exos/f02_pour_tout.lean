@@ -50,7 +50,7 @@ Exemple "Spécialisation d’une hypothèse de parité en créant un fait interm
   Hypothèses : (hf : f est paire)
   Conclusion : g (f (-5)) = g (f 5)
 Démonstration :
-  Comme f est paire on obtient hf5 : f (-5) = f 5
+  Comme f est paire on obtient que f (-5) = f 5
   Comme f (-5) = f 5 on conclut que g (f (-5)) = g (f 5)
 QED
 
@@ -67,7 +67,7 @@ Voyons maintenant un exemple qui démontre un énoncé quantifié en utilisant
 deux hypothèses quantifiées.
 Dans cet exemple, on nomme `x₀` le nombre réel introduit par la
 commande `Soit` pour insister sur le fait qu’il est fixé et bien voir
-qu’après la ligne `Comme f est paire on obtient hfx₀ : f (-x₀) = f x₀`, la nouvelle
+qu’après la ligne `Comme f est paire on obtient que f (-x₀) = f x₀`, la nouvelle
 hypothèse `hfx₀` ne porte que sur ce seul nombre.
 
 On notera aussi que la justification `par calcul`, destinée aux étapes
@@ -83,8 +83,8 @@ Exemple "Si f et g sont paires alors leur somme l’est aussi."
 Démonstration :
   Montrons que ∀ x, (f + g) (-x) = (f + g) x
   Soit x₀ : ℝ
-  Comme f est paire on obtient hf₀ : f (-x₀) = f x₀
-  Comme g est paire on obtient hg₀ : g (-x₀) = g x₀
+  Comme f est paire on obtient que f (-x₀) = f x₀
+  Comme g est paire on obtient que g (-x₀) = g x₀
   Calc
     (f + g) (-x₀) = f (-x₀) + g (-x₀) par calcul
     _             = f x₀ + g (-x₀)    puisque f (-x₀) = f x₀

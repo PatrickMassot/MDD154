@@ -1,5 +1,4 @@
 import Verbose.French.All
-import Mdd154.Notation3
 
 
 def surjective (f : ℝ → ℝ) := ∀ y, ∃ x, f x = y
@@ -26,6 +25,31 @@ def decroissante {α β : Type} [LE α] [LE β] (f : α → β) := ∀ x₁ x₂
 
 notation:50 f:80 " est décroissante" => decroissante f
 
+def lineaire (f : ℝ → ℝ) := ∀ x, ∀ a, f (a * x) = a * f x
+
+notation:50 f:80 " est linéaire" => lineaire f
+
+def limite_infini_infini (f : ℝ → ℝ) := ∀ M : ℝ, ∃ A : ℝ, ∀ x ≥ A, f x ≥ M
+
+notation3:50 f:60 " tend vers +∞ en +∞"  => limite_infini_infini f
+
+def limite_infini_minfini (f : ℝ → ℝ) := ∀ M : ℝ, ∃ A : ℝ, ∀ x ≥ A, f x ≤ M
+
+notation3:50 f:60 " tend vers -∞ en +∞"  => limite_infini_minfini f
+
+def continue1 (f : ℝ → ℝ) := ∀ x₀, ∀ ε > 0, ∃ δ > 0, ∀ x, |x - x₀| ≤ δ ⇒ |f x - f x₀| ≤ ε
+
+notation3:50 f:60 " est continue"  => continue1 f
+
+
+def limite_infini (f : ℝ → ℝ) (y : ℝ) := ∀ ε > 0, ∃ A : ℝ, ∀ x ≥ A, |f x - y| ≤ ε
+
+notation3:50 f:80 " tend vers " y:60 " en +∞"  => limite_infini f y
+
+def limite_uniforme (f : ℕ → ℝ → ℝ) (g : ℝ → ℝ) := ∀ ε > 0, ∃ N, ∀ n ≥ N, ∀ x, |f n x - g x| ≤ ε
+
+notation3:50 f:80 " tend uniformément vers " g:60  => limite_uniforme f g
+
 def limite_suite (u : ℕ → ℝ) (l : ℝ) : Prop :=
 ∀ ε > 0, ∃ N, ∀ n ≥ N, |u n - l| ≤ ε
 
@@ -35,6 +59,11 @@ notation3:50 u:80 " tend vers " l:60 => limite_suite u l
 def limite_infinie_suite (u : ℕ → ℝ) := ∀ A, ∃ N, ∀ n ≥ N, u n ≥ A
 
 notation3:50 u:80 " tend vers +∞"  => limite_infinie_suite u
+
+/-- La suite `u` tend vers `-∞`. -/
+def limite_moins_infinie_suite (u : ℕ → ℝ) := ∀ A, ∃ N, ∀ n ≥ N, u n ≤ A
+
+notation3:50 u:80 " tend vers -∞"  => limite_moins_infinie_suite u
 
 def est_borne_sup (M : ℝ) (u : ℕ → ℝ) :=
 (∀ n, u n ≤ M) ∧ ∀ ε > 0, ∃ n₀, u n₀ ≥ M - ε
@@ -65,6 +94,23 @@ notation3:50 x:80 " minore " A:50 => minorant A x
 def borne_inf (A : Set ℝ) (x : ℝ) := x minore A ∧ ∀ y, y minore A → x ≤ y
 
 notation3:50 x:80 " est borne inf de " A:50 => borne_inf A x
+
+def est_dense (A : Set ℝ) := ∀ x, ∀ ε > 0, ∃ a ∈ A, |a - x| ≤ ε
+
+notation:50 A:80 " est dense" => est_dense A
+
+def continuedans (f : ℝ → ℝ) (A : Set ℝ) := ∀ x₀, ∀ ε > 0, ∃ δ > 0, ∀ a ∈ A, |a - x₀| ≤ δ ⇒ |f a - f x₀| ≤ ε
+
+notation3:50 f:80 " est continue dans " A:60  => continuedans f A
+
+def periodique (T : ℝ) (f : ℝ → ℝ) := ∀ x, f (x + T) = f x
+
+notation:50 f:80 " est " T:80 "-périodique" => periodique T f
+
+def equivar (f : ℝ → ℝ) := ∀ x : ℝ, ∀ n : ℤ, f (x + n) = f x + n
+
+-- Note : l’accent en début de mot semble perturber la coloration syntaxique
+notation:50 f:80 " est equivariante" => equivar f
 
 namespace m154
 
@@ -147,6 +193,9 @@ abs_pos
 lemma non_zero_abs_pos {a : ℝ} : a ≠ 0 → |a| > 0 :=
 abs_pos.mpr
 
+lemma abs_pos_of_ne {x y : ℝ} (h : x ≠ y) : |x - y| > 0 := abs_sub_pos.mpr h
+lemma abs_pos_of_ne' {x y : ℝ} (h : x ≠ y) : |y - x| > 0 := abs_sub_pos.mpr h.symm
+
 open Lean PrettyPrinter Delaborator SubExpr in
 @[app_delab Max.max]
 def delabMax : Delab := do
@@ -191,7 +240,7 @@ lemma egal_si_abs_eps (x y : ℝ) : (∀ ε > 0, |x - y| ≤ ε) → x = y := by
 
 
 lemma abs_plus (x y : ℝ) : |x + y| ≤ |x| + |y| :=
-abs_add x y
+abs_add_le x y
 
 lemma ineg_triangle (x y z : ℝ) : |x - y| ≤ |x - z| + |z - y| :=
 abs_sub_le x z y
@@ -309,7 +358,6 @@ macro "verifie" : tactic =>
 `(tactic|check_defs <;>
     first |(
         try unfold limite_suite;
-        try unfold continue_en;
         push_neg;
         try simp only [exists_prop];
         try rfl ;
@@ -332,9 +380,9 @@ end Subset
 
 open Verbose.French
 
-lemma le_le_of_abs_le' {α : Type*} [LinearOrderedAddCommGroup α] {a b : α} : |a| ≤ b → a ≤ b ∧ -b ≤ a := fun h ↦ ⟨abs_le.1 h |>.2, abs_le.1 h |>.1⟩
+lemma le_le_of_abs_le' {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α} : |a| ≤ b → a ≤ b ∧ -b ≤ a := fun h ↦ ⟨abs_le.1 h |>.2, abs_le.1 h |>.1⟩
 
-lemma le_of_abs_le' {α : Type*} [LinearOrderedAddCommGroup α] {a b : α} : |a| ≤ b → -b ≤ a := fun h ↦ abs_le.1 h |>.1
+lemma le_of_abs_le' {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α} : |a| ≤ b → -b ≤ a := fun h ↦ abs_le.1 h |>.1
 
 lemma le_antisymm' {α : Type*} [PartialOrder α] {a b : α} (h : b ≤ a) (h' : a ≤ b) : a = b :=
   (le_antisymm h h').symm
@@ -349,28 +397,49 @@ lemma ex_mul_of_dvd' {a b : ℤ} (h : ∃ k, b = k * a) : a ∣ b := by
    use k
    rw [hk, mul_comm]
 
-private lemma abs_le_of_le_and_le {α : Type*} [LinearOrderedAddCommGroup α] {a b : α}
+private lemma abs_le_of_le_and_le {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α}
     (h : -b ≤ a ∧ a ≤ b) : |a| ≤ b := abs_le.2 h
 
-private lemma abs_le_of_le_and_le' {α : Type*} [LinearOrderedAddCommGroup α] {a b : α}
+private lemma abs_le_of_le_and_le' {α : Type*} [AddCommGroup α] [LinearOrder α] [IsOrderedAddMonoid α] {a b : α}
     (h : a ≤ b ∧ -b ≤ a) : |a| ≤ b := abs_le.2 ⟨h.2, h.1⟩
 
 private lemma not_le_lt (x y: ℝ) (h : x ≤ y) (h' : y < x) : False := lt_irrefl x (h.trans_lt h')
 
-configureAnonymousFactSplittingLemmas le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm' non_zero_abs_pos carre_pos m154.pos_pos m154.neg_neg extraction_superieur_id unicite_limite le_max_left le_max_right Iff.symm le_of_max_le_left le_of_max_le_right ex_mul_of_dvd ex_mul_of_dvd' abs_diff ineg_triangle abs_plus le_trans lt_of_le_of_lt lt_of_lt_of_le lt_trans abs_of_nonneg abs_of_neg abs_of_nonpos extraction_croissante not_le_lt
+
+Exercice-lemme ineg_quadrilatere
+  ""
+  Données : (a b c d : ℝ)
+  Hypothèses :
+  Conclusion : |a - b| ≤ |a - c| + |c - d| + |d - b|
+Démonstration :
+  Calc
+    |a - b| ≤ |a - d| + |d - b| par calcul
+    _ ≤ |a - c| + |c - d| + |d - b| par calcul
+QED
+
+lemma le_le_of_le_min {α : Type*} [LinearOrder α] {a b c : α} : c ≤ min a b → c ≤ a ∧ c ≤ b := le_inf_iff.1
+
+lemma le_of_le_min_left {α : Type*} [LinearOrder α] {a b c : α}
+  (h : c ≤ min a b) : c ≤ a := le_inf_iff.1 h |>.1
+
+lemma le_of_le_min_right {α : Type*} [LinearOrder α] {a b c : α}
+  (h : c ≤ min a b) : c ≤ b := le_inf_iff.1 h |>.2
+
+configureAnonymousFactSplittingLemmas le_of_abs_le' le_of_abs_le le_le_of_abs_le' le_le_of_abs_le le_le_of_max_le eq_zero_or_eq_zero_of_mul_eq_zero le_antisymm le_antisymm' non_zero_abs_pos carre_pos m154.pos_pos m154.neg_neg extraction_superieur_id unicite_limite le_max_left le_max_right Iff.symm le_of_max_le_left le_of_max_le_right ex_mul_of_dvd ex_mul_of_dvd' abs_diff ineg_triangle abs_plus le_trans lt_of_le_of_lt lt_of_lt_of_le lt_trans abs_of_nonneg abs_of_neg abs_of_nonpos extraction_croissante not_le_lt le_le_of_le_min le_of_le_min_left le_of_le_min_right
+abs_pos_of_ne abs_pos_of_ne'
 
 configureAnonymousGoalSplittingLemmas LogicIntros AbsIntros Set.Subset.antisymm le_antisymm le_antisymm' lt_irrefl abs_le_of_le_and_le abs_le_of_le_and_le' egal_si_abs_eps
 
 configureAnonymousCaseSplittingLemmas le_or_gt lt_or_gt_of_ne lt_or_eq_of_le eq_or_lt_of_le eq_zero_or_eq_zero_of_mul_eq_zero Classical.em pair_ou_impair le_total
 
-configureAnonymousComputeLemmas abs_diff ineg_triangle abs_plus inferieur_max_gauche inferieur_max_droite
+configureAnonymousComputeLemmas abs_diff ineg_triangle abs_plus inferieur_max_gauche inferieur_max_droite ineg_quadrilatere
 
 useDefaultDataProviders
 
 useDefaultSuggestionProviders
 
 configureUnfoldableDefs «croissante» «decroissante» «paire» «impaire»
-  «valeur_adherence» «limite_suite» «surjective» «injective» «pair» «impair» «extraction» suite_cauchy limite_infinie_suite
+  «valeur_adherence» «limite_suite» «surjective» «injective» «pair» «impair» «extraction» suite_cauchy limite_infinie_suite est_borne_sup est_borne_inf majorant borne_sup minorant borne_inf lineaire limite_infini_infini continue1 limite_infini limite_uniforme limite_infini_minfini est_dense continuedans periodique
 
 -- Remarque : en arrivant aux feuilles de négations on pourra ajouter helpByContradictionGoal
 configureHelpProviders SinceHypHelp SinceGoalHelp
@@ -384,6 +453,7 @@ macro_rules | `($x ∣ $y)   => `(@Dvd.dvd ℤ Int.instDvd ($x : ℤ) ($y : ℤ)
 macro "setup_env" : command => `(set_option linter.unusedTactic false
 set_option linter.style.multiGoal false
 set_option linter.unnecessarySimpa false
+open Verbose.NameLess
 )
 
 macro "fct " x:ident " ↦ " y:term : term => `(fun ($x : ℝ) ↦ ($y : ℝ))
@@ -409,3 +479,4 @@ end
 notation3 "Prédicat sur " X => X → Prop
 notation3 "Énoncé" => Prop
 notation3 "Faux" => False
+notation3 "𝒫" X => Set X

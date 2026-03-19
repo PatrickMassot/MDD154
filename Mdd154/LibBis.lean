@@ -114,8 +114,8 @@ lemma gendarmes {u v w : ℕ → ℝ} {l : ℝ}
   specialize hu n
   specialize hw n
   rw [abs_inferieur_ssi] at *
-  cases' hN with hNl hNd
-  cases' hN' with hN'l hN'd
+  rcases hN with ⟨hNl, hNd⟩
+  rcases hN' with ⟨hN'l, hN'd⟩
   constructor
   -- Ici linarith peut finir, mais sur papier on écrirait
   calc -ε ≤ u n - l := by linarith
@@ -133,7 +133,7 @@ variable {u : ℕ → ℝ} {l : ℝ}
 lemma limite_extraction_si_limite (h : limite_suite u l) (hφ : φ est une extraction) :
 limite_suite (u ∘ φ) l := by
   intros ε ε_pos
-  cases' h ε ε_pos with N hN
+  rcases h ε ε_pos with ⟨N, hN⟩
   use N
   intros n hn
   apply hN

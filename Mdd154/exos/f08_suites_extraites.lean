@@ -68,10 +68,14 @@ Démonstration :
 QED
 
 /-
-L'exercice précédent est un exercice-lemme, de sorte qu'il vous sera possible
-de l'invoquer implicitement dans les démonstrations suivantes.
+L'exercice précédent est un exercice-lemme, ce qui signifie que le résultat est
+ajouté à la base de données de lemmes utilisée par `Comme` à la fin de l’exercice.
+Ainsi il vous sera possible de l'invoquer implicitement dans les démonstrations
+du reste du fichier.
+Cela s’applique également aux quatres exercices suivants qui peuvent chacun être
+utilisés par `Comme` dans les exercices ultérieurs.
 
-Un réel `a` est valeur d'adhérence d'une suite `u` s'il
+On rappelle qu’un réel `a` est valeur d'adhérence d'une suite `u` s'il
 existe une suite extraite de `u` qui tend vers `a` :
 
 `a est valeur d'adhérence de u : ∃ φ, φ est une extraction ∧ (u ∘ φ) tend vers a'

@@ -58,11 +58,11 @@ Exemple "Disjonction de cas"
   Conclusion : a^2 = 4
 Démonstration :
   On discute selon que a = 2 ou a = -2
-  Supposons ha : a = 2
+  Supposons que a = 2
   Calc
     a^2 = 2^2 puisque a = 2
     _   = 4   par calcul
-  Supposons ha : a = -2
+  Supposons que a = -2
   Calc
     a^2 = (-2)^2 puisque a = -2
     _   = 4      par calcul
@@ -94,12 +94,12 @@ Exemple "Utilisation implicite d’une disjonction."
   Conclusion : x^2 = 1
 Démonstration :
   On discute selon que x - 1 = 0 ou x + 1 = 0
-  Supposons h : x - 1 = 0
+  Supposons que x - 1 = 0
   Montrons que x^2 = 1 -- cette ligne est optionnelle mais facilite la lecture
   Calc
     x^2 = 1^2 puisque x = 1
     _   = 1 par calcul
-  Supposons h : x + 1 = 0
+  Supposons que x + 1 = 0
   Montrons que x^2 = 1 -- cette ligne est optionnelle mais facilite la lecture
   Calc
     x^2 = (-1)^2 puisque x = -1
@@ -113,7 +113,7 @@ dans la démonstration et la décision stratégique pour démontrer la disjoncti
 but dépend de la branche courante.
 
 On en profite pour faire connaissance avec la commande
-`Fait nom : … car`
+`Fait : … car`
 qui introduit une nouvelle affirmation sans lien direct avec le but
 courant. Après démonstration dans un bloc de commandes indenté, ce fait
 devient disponible pour la démonstration du but courant, avec le nom donné.
@@ -124,23 +124,23 @@ Exemple "Une disjonction montrée après dijonction de cas."
   Hypothèses :
   Conclusion : a = a*b ⇒ a = 0 ∨ b = 1
 Démonstration :
-  Supposons hyp : a = a*b
+  Supposons que a = a*b
   -- À ce stade, il faut démontrer que a = 0 ou b = 1
   -- Mais il est impossible de trancher entre ces deux options.
   -- Il faut exploiter les hypothèses et faire une disjonction de cas.
-  Fait H : a*(1 - b) = 0 car
+  Fait : a*(1 - b) = 0 car
     -- Dans ce bloc de code, il faut démontrer que a*(1 - b) = 0
     Calc a*(1 - b) = a - a*b par calcul
          _         = 0       puisque a = a*b
   -- Nous disposons maintenant du fait `H : a * (1 - b) = 0`
   -- prêt à être utilisé par `On discute`
   On discute selon que a = 0 ou 1 - b = 0
-  Supposons h : a = 0
+  Supposons que a = 0
   -- On peut maintenant décider quel côté de la disjonction
   -- démontrer
   Montrons que a = 0 -- cette ligne est une décision irréversible
   On conclut par hypothèse
-  Supposons h : 1 - b = 0
+  Supposons que 1 - b = 0
   -- Dans ce cas, nous décidons de démontrer l’autre conclusion possible.
   Montrons que b = 1 -- cette ligne est une décision irréversible
   Comme 1 - b = 0 on conclut que b = 1
@@ -179,7 +179,7 @@ L’exercice précédent est un exercice-lemme, ce qui signifie que son résulta
 Ainsi, si le contexte d’une démonstration comporte un entier `p`, on pourra
 écrire
 ```
-  Comme p*(p + 1) est pair on obtient l tel que hl : p*(p + 1) = 2*l
+  Comme p*(p + 1) est pair on obtient l tel que p*(p + 1) = 2*l
 ```
 sans justifier pourquoi `p*(p + 1)` est pair.
 

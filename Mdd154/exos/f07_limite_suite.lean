@@ -18,7 +18,7 @@ d’utiliser l’abbréviation
 `Soit ε > 0`
 à la place de la suite de commandes
 `Soit ε : ℝ`
-`Supposons ε_pos : ε > 0`.
+`Supposons que ε > 0`.
 
 Pour utiliser un énoncé qui commence ainsi, il faut donner à la commande
 `Comme` l’énoncé et le fait que le nombre auquel on veut spécialiser l’énoncé est
@@ -52,10 +52,10 @@ Exemple "Un exemple pour démarrer"
   Conclusion : v tend vers 0
 Démonstration :
   Soit ε > 0
-  Comme u tend vers l et ε > 0 on obtient N₁ tel que hN₁ : ∀ n ≥ N₁, |u n - l| ≤ ε
+  Comme u tend vers l et ε > 0 on obtient N₁ tel que ∀ n ≥ N₁, |u n - l| ≤ ε
   Montrons que N₁ convient
   Soit N ≥ N₁
-  Comme ∀ n ≥ N₁, |u n - l| ≤ ε et N ≥ N₁ on obtient hN₁' : |u N - l| ≤ ε
+  Comme ∀ n ≥ N₁, |u n - l| ≤ ε et N ≥ N₁ on obtient que |u N - l| ≤ ε
   Calc
     |v N - 0| = |u N - l - 0| puisque ∀ n, v n = u n - l
     _         = |u N - l|     par calcul
@@ -89,10 +89,10 @@ Il est conseillé de noter ces lemmes sur une feuille car ils
 peuvent être utiles dans chaque exercice.
 -/
 
-Exercice "07.2 Si u tend vers l strictement positif, alors u n ≥ l/2 pour n assez grand."
+Exercice "07.2 Si u tend vers l strictement positif, alors u n > 0 pour n assez grand."
   Données : (u : ℕ → ℝ) (l : ℝ)
   Hypothèses : (hl : l > 0)
-  Conclusion : (u tend vers l) ⇒ ∃ N, ∀ n ≥ N, u n ≥ l/2
+  Conclusion : (u tend vers l) ⇒ ∃ N, ∀ n ≥ N, u n > 0
 Démonstration :
   sorry
 QED

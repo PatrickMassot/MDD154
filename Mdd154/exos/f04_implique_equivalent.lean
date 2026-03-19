@@ -1,4 +1,5 @@
 import Mdd154.Lib
+setup_env
 
 namespace m154
 open Nat
@@ -96,8 +97,7 @@ QED
 /-
 Voyons maintenant comment enchaîner l’utilisation de deux implications.
 Lorsque la règle du modus ponens ne permet pas de conclure immédiatement, on peut
-remplacer le `on conclut que …` final par `on obtient F : …` où `F` est un nom
-d’hypothèse au choix (parmi les noms disponibles).
+remplacer le `on conclut que …` final par `on obtient que …`.
 -/
 
 Exemple "Enchaînement d’implications, vers l’avant."
@@ -105,7 +105,7 @@ Exemple "Enchaînement d’implications, vers l’avant."
   Hypothèses : (ha : a > 0)
   Conclusion : (a^2)^2 > 0
 Démonstration :
-  Comme a > 0 et a > 0 ⇒ a^2 > 0 on obtient ha' : a^2 > 0
+  Comme a > 0 et a > 0 ⇒ a^2 > 0 on obtient que a^2 > 0
   Comme a^2 > 0 et a^2 > 0 ⇒ (a^2)^2 > 0 on conclut que (a^2)^2 > 0
 QED
 
@@ -166,7 +166,7 @@ Exemple "Enchaînement d’implications, en laissant les implications implicites
   Hypothèses : (ha : a ≠ 0)
   Conclusion : |a|^2 > 0
 Démonstration :
-  Comme a ≠ 0 on obtient ha' : |a| > 0
+  Comme a ≠ 0 on obtient que |a| > 0
   Comme |a| > 0 on conclut que |a|^2 > 0
 QED
 
@@ -212,9 +212,7 @@ Réfléchir à ce genre de choses est un des objectifs de ce cours.
 La règle de démonstration directe d’une implication est beaucoup plus simple
 car elle n’admet aucune variante stylistique.
 Pour démontrer un énoncé de la forme `P ⇒ Q`, on suppose que `P` est vrai et on démontre `Q`.
-Ici on utilise la commande `Supposons nom : …` où `nom` est un nom à choisir parmi les
-noms disponibles et `…` est à remplacer par l’énoncé `P` (en fait le `: …` est optionnel
-mais il aide la lisibilité).
+Ici on utilise la commande `Supposons que P`.
 
 On peut reprendre un exercice précédent mais, au lieu de supposer a priori
 l’hypothèse `a ≠ 0`, on annonce une implication l’ayant pour prémisse.
@@ -226,8 +224,8 @@ Exemple "Démonstration d’une implication"
   Hypothèses :
   Conclusion : a ≠ 0 ⇒ |a|^2 > 0
 Démonstration :
-  Supposons ha : a ≠ 0
-  Comme a ≠ 0 on obtient ha' : |a| > 0
+  Supposons que a ≠ 0
+  Comme a ≠ 0 on obtient que |a| > 0
   Comme |a| > 0 on conclut que |a|^2 > 0
 QED
 
@@ -263,9 +261,9 @@ Exemple "Une composée de fonctions croissantes est croissante"
   Conclusion : (g ∘ f) est croissante
 Démonstration :
   Soit x₁ x₂
-  Supposons h : x₁ ≤ x₂
+  Supposons que x₁ ≤ x₂
   Montrons que g (f x₁) ≤ g (f x₂) -- Cette ligne est facultative mais facilite la lecture
-  Comme f est croissante et x₁ ≤ x₂ on obtient H : f x₁ ≤ f x₂
+  Comme f est croissante et x₁ ≤ x₂ on obtient que f x₁ ≤ f x₂
   Comme g est croissante et f x₁ ≤ f x₂ on conclut que g (f x₁) ≤ g (f x₂)
 QED
 
@@ -277,7 +275,7 @@ Exemple "Une composée de fonctions croissantes est croissante.
   Conclusion : (g ∘ f) est croissante
 Démonstration :
   Soit x₁ x₂
-  Supposons h : x₁ ≤ x₂
+  Supposons que x₁ ≤ x₂
   Montrons que (g ∘ f) x₁ ≤ (g ∘ f) x₂
   Comme g est croissante il suffit de montrer que f x₁ ≤ f x₂
   Comme f est croissante et x₁ ≤ x₂ on conclut que f x₁ ≤ f x₂
@@ -337,7 +335,7 @@ Exemple "Utilisation d’une des implications d’une équivalence."
   Hypothèses : (h : P ⇔ R) (h' : P)
   Conclusion : R
 Démonstration :
-  Comme R ⇔ P on obtient H : P ⇒ R
+  Comme R ⇔ P on obtient que P ⇒ R
   Comme P ⇒ R et P on conclut que R
 QED
 
@@ -371,8 +369,8 @@ Démonstration :
   Montrons d'abord que P ⇒ R
   On conclut par hypothèse
   Montrons maintenant que R ⇒ P
-  Supposons hR : R
-  Comme R ⇒ Q et R on obtient hQ : Q
+  Supposons que R
+  Comme R ⇒ Q et R on obtient que Q
   Comme Q ⇒ P et Q on conclut que P
 QED
 
