@@ -432,7 +432,7 @@ configureAnonymousGoalSplittingLemmas LogicIntros AbsIntros Set.Subset.antisymm 
 
 configureAnonymousCaseSplittingLemmas le_or_gt lt_or_gt_of_ne lt_or_eq_of_le eq_or_lt_of_le eq_zero_or_eq_zero_of_mul_eq_zero Classical.em pair_ou_impair le_total
 
-configureAnonymousComputeLemmas abs_diff ineg_triangle abs_plus inferieur_max_gauche inferieur_max_droite ineg_quadrilatere
+configureAnonymousComputeLemmas abs_diff ineg_triangle abs_plus inferieur_max_gauche inferieur_max_droite ineg_quadrilatere abs_neg
 
 useDefaultDataProviders
 
