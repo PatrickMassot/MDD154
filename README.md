@@ -1,18 +1,9 @@
 # MDD154
 
-Public version of the exercises for the MDD154 course in Université Paris-Saclay
-at Orsay.
+Exercices pour le cours de Logique et démonstrations assistées par ordinateur à Orsay.
 
-This is a course for first year undergrads learning about mathematical proofs.
+Suivez les instructions d’installation de Lean sur https://lean-lang.org/install/
+puis utilisez le menu ∀ de VSCode pour ouvrir le projet https://github.com/PatrickMassot/MDD154.git 
+(il faut sélectionner Open Project puis Download project dans le menu).
 
-To work using Lean, you either have to install Lean locally, use Codespaces or use Gitpod.
-
-* To use codespaces, make sure you're logged in to Github, click the button below, select `4-core`, and then press `Create codespace`. After a few minutes an editor with Lean working will open in your browser.
-
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/PatrickMassot/MDD154)
-
-* Gitpod is very similar to Codespaces, click the button below, press `Continue` and wait a few minutes.
-
-[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/PatrickMassot/MDD154)
-* To install Lean locally, follow the instructions [here](https://leanprover-community.github.io/get_started.html).
-
+Pour utiliser plutôt un éditeur supportable, voir https://github.com/Julian/lean.nvim/blob/main/README.md
